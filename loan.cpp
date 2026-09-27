@@ -9,7 +9,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
     cout << "\tAmortization Table\n";
     cout << "*****************************************************************\n";
     
-    // Column header widths
+    // Header format
     cout << left << setw(7) << "Month" 
          << setw(14) << "Balance" 
          << setw(12) << "Payment" 
@@ -34,7 +34,11 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
 
     while (balance > 0) {
         month++;
+        
+        // Calculate rounded interest to prevent 1-cent cumulative rounding divergence
         double interest = balance * (monthlyRate / 100.0);
+        interest = static_cast<int>(interest * 100 + 0.5) / 100.0;
+        
         double actualPayment = monthlyPayment;
         double principal = 0.0;
 
@@ -45,6 +49,8 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
         } else {
             principal = monthlyPayment - interest;
             balance -= principal;
+            // Round balance to prevent floating point inaccuracy drift
+            balance = static_cast<int>(balance * 100 + 0.5) / 100.0;
         }
 
         totalInterest += interest;
@@ -57,7 +63,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
         cout << "$" << setw(13) << balance 
              << "$" << setw(11) << actualPayment;
 
-        // Rate (unformatted defaultfloat to output 1.5, 1, 4.16667, 0)
+        // Rate
         cout << resetiosflags(ios::fixed) << defaultfloat;
         cout << left << setw(8) << monthlyRate;
 

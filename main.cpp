@@ -4,12 +4,12 @@
 
 using namespace std;
 
-int main( int argc, char * argv[] )
+int main(int argc, char * argv[])
 {
 	if (argc > 4) 
 	{
 		cout << "Too many arguments. Cannot pass in more than three." << endl;
-		return -1;
+		return 0;
 	}
 
 	int i = 1;
@@ -32,7 +32,7 @@ int main( int argc, char * argv[] )
 					cout << "(Invalid interest rate): " << argv[1] << " " << argv[i] << endl;
 				else
 					cout << "(Invalid payment): " << argv[1] << " " << argv[2] << " " << argv[i] << endl;
-				return -2;
+				return 0;
 			}
 			i++;
 		}
@@ -42,36 +42,36 @@ int main( int argc, char * argv[] )
 	yearly_interest_rate = arguments[1];
 	monthly_payment = arguments[2];
 
-	// Check the loan amount
+	// Check loan amount
 	if (argc <= 1 || loan_amount <= 0)
 	{
 		cout << "(Invalid loan amount): " << (argc > 1 ? argv[1] : "") << endl;
-		return -2;
+		return 0;
 	}
 
-	// Check the interest rate
+	// Check interest rate
 	if (argc <= 2 || yearly_interest_rate < 0)
 	{
 		cout << "(Invalid interest rate): " << argv[1] << " " << (argc > 2 ? argv[2] : "") << endl;
-		return -2;
+		return 0;
 	}
 
-	// Check the monthly payment
+	// Check monthly payment
 	if (argc <= 3 || monthly_payment <= 0)
 	{
 		cout << "(Invalid payment): " << argv[1] << " " << argv[2] << " " << (argc > 3 ? argv[3] : "") << endl;
-		return -2;
+		return 0;
 	}
 
-	// Check for insufficient payment
+	// Check insufficient payment
 	double first_month_interest = loan_amount * (yearly_interest_rate / 12.0 / 100.0);
 	if (monthly_payment <= first_month_interest)
 	{
 		cout << "(Insufficient payment): " << argv[1] << " " << argv[2] << " " << argv[3] << endl;
-		return -3;
+		return 0;
 	}
 
-	// Print table directly without printing Loan Amount / Interest Rate preambles
+	// Call table generator directly
 	printAmortizationTable(loan_amount, yearly_interest_rate, monthly_payment);
 
 	return 0;
