@@ -3,9 +3,7 @@
 
 using namespace std;
 
-// pass in space-delimited arguments when you call the executable
-// Example: ./a.out 1000 18 50
-int main( int argc, char * argv[] )
+int main(int argc, char * argv[])
 {
 	if (argc > 4) 
 	{
@@ -14,13 +12,12 @@ int main( int argc, char * argv[] )
 	}
 
 	int i = 1;
-	double loan_amount, yearly_interest_rate, monthly_payment;
-
-	double arguments [3] = {0, 0, 0};   // start at 0 so missing values are caught below
+	double loan_amount = 0, yearly_interest_rate = 0, monthly_payment = 0;
+	double arguments[3] = {0, 0, 0};
 
 	if (argc > 1)
 	{
-		while ( i < argc )
+		while (i < argc)
 		{
 			try
 			{
@@ -28,9 +25,9 @@ int main( int argc, char * argv[] )
 			}
 			catch(const std::invalid_argument&)
 			{
-				if(i==1)
+				if (i == 1)
 					cout << "(Invalid loan amount): " << argv[i] << endl;
-				else if (i==2)
+				else if (i == 2)
 					cout << "(Invalid interest rate): " << argv[i-1] << " " << argv[i] << endl;
 				else
 					cout << "(Invalid payment): " << argv[i-2] << " " << argv[i-1] << " " << argv[i] << endl;
@@ -44,28 +41,25 @@ int main( int argc, char * argv[] )
 	yearly_interest_rate = arguments[1];
 	monthly_payment = arguments[2];
 
-	// Check the loan amount (must be more than 0)
 	if (loan_amount <= 0)
 	{
 		cout << "(Invalid loan amount): " << argv[1] << endl;
 		return -2;
 	}
 
-	// Check the interest rate (0% is allowed, negative is not)
 	if (yearly_interest_rate < 0)
 	{
 		cout << "(Invalid interest rate): " << argv[1] << " " << argv[2] << endl;
 		return -2;
 	}
 
-	// Check the monthly payment (must be more than 0)
 	if (monthly_payment <= 0)
 	{
 		cout << "(Invalid payment): " << argv[1] << " " << argv[2] << " " << argv[3] << endl;
 		return -2;
 	}
 
-	// The payment has to be bigger than the first month's interest
+	// Validate sufficient payment BEFORE printing inputs
 	double first_month_interest = loan_amount * (yearly_interest_rate / 12.0 / 100.0);
 	if (monthly_payment <= first_month_interest)
 	{
@@ -73,7 +67,7 @@ int main( int argc, char * argv[] )
 		return -3;
 	}
 
-	// Show inputs matching sample output
+	// Print inputs ONLY when all checks pass
 	cout << "\nLoan Amount: " << loan_amount << endl;
 	cout << "Interest Rate (% per year): " << yearly_interest_rate << endl;
 	cout << "Monthly Payments: " << monthly_payment << endl;

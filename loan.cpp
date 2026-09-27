@@ -9,7 +9,6 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
     cout << "\tAmortization Table\n";
     cout << "*****************************************************************\n";
     
-    // Output headers with exact spacing matching expected output
     cout << left << setw(7) << "Month" 
          << setw(14) << "Balance" 
          << setw(12) << "Payment" 
@@ -17,7 +16,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
          << setw(12) << "Interest" 
          << "Principal\n";
 
-    // Row 0 output
+    // Row 0
     cout << left << setw(7) << 0;
     cout << fixed << setprecision(2);
     cout << "$" << setw(13) << loan;
@@ -38,7 +37,6 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
         double actualPayment = monthlyPayment;
         double principal = 0.0;
 
-        // Final payment check
         if (balance + interest <= monthlyPayment) {
             actualPayment = balance + interest;
             principal = balance;
@@ -50,19 +48,18 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
 
         totalInterest += interest;
 
-        // Print Month
         cout << left << setw(7) << month;
 
-        // Print Balance & Payment
+        // Balance & Payment
         cout << fixed << setprecision(2);
         cout << "$" << setw(13) << balance 
              << "$" << setw(11) << actualPayment;
 
-        // Print Rate (unformatted precision to output 1.5, 1, 4.16667, 0)
-        cout << resetiosflags(ios::fixed) << defaultfloat;
+        // Rate
+        cout << resetiosflags(ios::fixed);
         cout << left << setw(8) << monthlyRate;
 
-        // Print Interest & Principal
+        // Interest & Principal
         cout << fixed << setprecision(2);
         cout << "$" << setw(11) << interest 
              << "$" << principal << "\n";
