@@ -6,11 +6,11 @@ using namespace std;
 
 void printAmortizationTable(double loan, double yearlyRate, double monthlyPayment) {
     double monthlyRate = yearlyRate / 12.0;
-    double firstMonthInterest = loan * (monthlyRate / 100.0);
+    double interest = loan * (monthlyRate / 100.0);
 
-    // Special Case Check: Ensure monthly payment exceeds first month's interest
-    if (monthlyPayment <= firstMonthInterest) {
-        cout << "(Insufficient payment)\n";
+    // Validate that the monthly payment covers the initial month's interest
+    if (monthlyPayment <= interest) {
+        cout << "Insufficient payment\n";
         return;
     }
 
@@ -25,7 +25,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
          << setw(10) << "Interest" 
          << "Principal\n";
 
-    // Row 0
+    // Month 0 row
     cout << left << setw(8) << 0 
          << "$" << setw(9) << loan 
          << setw(10) << "N/A" 
@@ -39,11 +39,11 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
 
     while (balance > 0) {
         month++;
-        double interest = balance * (monthlyRate / 100.0);
+        interest = balance * (monthlyRate / 100.0);
         double actualPayment = monthlyPayment;
         double principal = 0.0;
 
-        // Last Payment Handling
+        // Final payment adjustment when balance + interest is less than regular payment
         if (balance + interest <= monthlyPayment) {
             actualPayment = balance + interest;
             principal = balance;
