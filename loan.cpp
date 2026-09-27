@@ -9,12 +9,13 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
     cout << "\tAmortization Table\n";
     cout << "*****************************************************************\n";
     
+    // Column header widths
     cout << left << setw(7) << "Month" 
          << setw(14) << "Balance" 
          << setw(12) << "Payment" 
          << setw(8) << "Rate" 
          << setw(12) << "Interest" 
-         << "Principal\n";
+         << "Principal   \n";
 
     // Row 0
     cout << left << setw(7) << 0;
@@ -24,7 +25,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
     cout << left << setw(12) << "N/A" 
          << setw(8) << "N/A" 
          << setw(12) << "N/A" 
-         << "N/A\n";
+         << "N/A         \n";
 
     int month = 0;
     double monthlyRate = yearlyRate / 12.0;
@@ -48,6 +49,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
 
         totalInterest += interest;
 
+        // Month
         cout << left << setw(7) << month;
 
         // Balance & Payment
@@ -55,14 +57,14 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
         cout << "$" << setw(13) << balance 
              << "$" << setw(11) << actualPayment;
 
-        // Rate
-        cout << resetiosflags(ios::fixed);
+        // Rate (unformatted defaultfloat to output 1.5, 1, 4.16667, 0)
+        cout << resetiosflags(ios::fixed) << defaultfloat;
         cout << left << setw(8) << monthlyRate;
 
         // Interest & Principal
         cout << fixed << setprecision(2);
         cout << "$" << setw(11) << interest 
-             << "$" << principal << "\n";
+             << "$" << principal << "      \n";
     }
 
     cout << "*****************************************************************\n\n";
