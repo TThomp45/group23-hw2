@@ -5,9 +5,16 @@
 using namespace std;
 
 void printAmortizationTable(double loan, double yearlyRate, double monthlyPayment) {
-    // Set output formatting to fixed floating point with 2 decimal places
-    cout << fixed << setprecision(2);
+    double monthlyRate = yearlyRate / 12.0;
+    double firstMonthInterest = loan * (monthlyRate / 100.0);
 
+    // Special Case Check: Ensure monthly payment exceeds first month's interest
+    if (monthlyPayment <= firstMonthInterest) {
+        cout << "(Insufficient payment)\n";
+        return;
+    }
+
+    cout << fixed << setprecision(2);
     cout << "*****************************************************************\n";
     cout << "\tAmortization Table\n";
     cout << "*****************************************************************\n";
@@ -18,7 +25,7 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
          << setw(10) << "Interest" 
          << "Principal\n";
 
-    // Row 0 output
+    // Row 0
     cout << left << setw(8) << 0 
          << "$" << setw(9) << loan 
          << setw(10) << "N/A" 
@@ -27,19 +34,16 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
          << "N/A\n";
 
     int month = 0;
-    double monthlyRate = yearlyRate / 12.0; // Monthly interest rate in percentage
     double totalInterest = 0.0;
     double balance = loan;
 
     while (balance > 0) {
         month++;
-        
-        // Calculate interest for the current month
         double interest = balance * (monthlyRate / 100.0);
         double actualPayment = monthlyPayment;
         double principal = 0.0;
 
-        // Special case: Handle last payment when remaining balance + interest is less than regular payment
+        // Last Payment Handling
         if (balance + interest <= monthlyPayment) {
             actualPayment = balance + interest;
             principal = balance;
@@ -51,7 +55,6 @@ void printAmortizationTable(double loan, double yearlyRate, double monthlyPaymen
 
         totalInterest += interest;
 
-        // Output month row formatted cleanly into columns
         cout << left << setw(8) << month 
              << "$" << setw(9) << balance 
              << "$" << setw(9) << actualPayment 
