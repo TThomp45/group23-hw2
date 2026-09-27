@@ -3,8 +3,8 @@
 
 using namespace std;
 
-//pass in space-delimited arguments when you call the executable
-//Example: ./a.out 1 2 3.3
+// pass in space-delimited arguments when you call the executable
+// Example: ./a.out 1000 18 50
 int main( int argc, char * argv[] )
 {
 	if (argc > 4) 
@@ -22,7 +22,6 @@ int main( int argc, char * argv[] )
 	{
 		while ( i < argc )
 		{
-
 			try
 			{
 				arguments[i-1] = stod(argv[i]);
@@ -48,36 +47,34 @@ int main( int argc, char * argv[] )
 	// Check the loan amount (must be more than 0)
 	if (loan_amount <= 0)
 	{
-		cout << "(Invalid loan amount)" << endl;
+		cout << "(Invalid loan amount): " << argv[1] << endl;
 		return -2;
 	}
 
 	// Check the interest rate (0% is allowed, negative is not)
 	if (yearly_interest_rate < 0)
 	{
-		cout << "(Invalid interest rate)" << endl;
+		cout << "(Invalid interest rate): " << argv[1] << " " << argv[2] << endl;
 		return -2;
 	}
 
 	// Check the monthly payment (must be more than 0)
 	if (monthly_payment <= 0)
 	{
-		cout << "(Invalid payment)" << endl;
+		cout << "(Invalid payment): " << argv[1] << " " << argv[2] << " " << argv[3] << endl;
 		return -2;
 	}
 
-	// The payment has to be bigger than the first month's interest,
-	// otherwise the loan would never get paid off
-	double first_month_interest = loan_amount * (yearly_interest_rate / 12 / 100);
+	// The payment has to be bigger than the first month's interest
+	double first_month_interest = loan_amount * (yearly_interest_rate / 12.0 / 100.0);
 	if (monthly_payment <= first_month_interest)
 	{
-		cout << "(Insufficient payment)" << endl;
+		cout << "(Insufficient payment): " << argv[1] << " " << argv[2] << " " << argv[3] << endl;
 		return -3;
 	}
 
-	// Show the inputs like the sample in the PDF
-	cout << endl;
-	cout << "Loan Amount: " << loan_amount << endl;
+	// Show inputs matching sample output
+	cout << "\nLoan Amount: " << loan_amount << endl;
 	cout << "Interest Rate (% per year): " << yearly_interest_rate << endl;
 	cout << "Monthly Payments: " << monthly_payment << endl;
 	cout << endl;
