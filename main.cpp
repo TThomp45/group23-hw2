@@ -4,8 +4,6 @@
 
 using namespace std;
 
-// pass in space-delimited arguments when you call the executable
-// Example: ./a.out 1000 18 50
 int main( int argc, char * argv[] )
 {
 	if (argc > 4) 
@@ -44,28 +42,28 @@ int main( int argc, char * argv[] )
 	yearly_interest_rate = arguments[1];
 	monthly_payment = arguments[2];
 
-	// Check the loan amount (must be > 0 or argc must be valid)
+	// Check the loan amount
 	if (argc <= 1 || loan_amount <= 0)
 	{
 		cout << "(Invalid loan amount): " << (argc > 1 ? argv[1] : "") << endl;
 		return -2;
 	}
 
-	// Check the interest rate (0% allowed, negative is not)
+	// Check the interest rate
 	if (argc <= 2 || yearly_interest_rate < 0)
 	{
 		cout << "(Invalid interest rate): " << argv[1] << " " << (argc > 2 ? argv[2] : "") << endl;
 		return -2;
 	}
 
-	// Check the monthly payment (must be > 0)
+	// Check the monthly payment
 	if (argc <= 3 || monthly_payment <= 0)
 	{
 		cout << "(Invalid payment): " << argv[1] << " " << argv[2] << " " << (argc > 3 ? argv[3] : "") << endl;
 		return -2;
 	}
 
-	// Insufficient payment validation (must happen BEFORE printing initial header)
+	// Check for insufficient payment
 	double first_month_interest = loan_amount * (yearly_interest_rate / 12.0 / 100.0);
 	if (monthly_payment <= first_month_interest)
 	{
@@ -73,13 +71,7 @@ int main( int argc, char * argv[] )
 		return -3;
 	}
 
-	// Output inputs matching expected format
-	cout << endl;
-	cout << "Loan Amount: " << loan_amount << endl;
-	cout << "Interest Rate (% per year): " << yearly_interest_rate << endl;
-	cout << "Monthly Payments: " << monthly_payment << endl;
-	cout << endl;
-
+	// Print table directly without printing Loan Amount / Interest Rate preambles
 	printAmortizationTable(loan_amount, yearly_interest_rate, monthly_payment);
 
 	return 0;
